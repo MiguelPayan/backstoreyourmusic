@@ -16,7 +16,6 @@ controller.index = async (req,res) =>{
                 
                 console.log('JSON' + usuarios);
                 console.log('CONNECTION OK with nodemon')
-                res.render('index', {title})
         }catch(err){
                 console.log(err);
         }    

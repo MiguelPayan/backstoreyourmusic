@@ -10,4 +10,6 @@ router.get('/', controller.index);
 
 router.get('/usuarios', controllerusers.mostrar);
 
+router.get('/eliminaruser', controllerusers.delete);
+
 module.exports = router;
