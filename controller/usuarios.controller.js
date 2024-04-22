@@ -23,15 +23,21 @@ userscontroller.mostrar = async (req, res) =>{
 userscontroller.delete = async (req, res) => {
         console.log("Cliente se ha conectado");
         await connection()
-        const correo = req.body.email;
+        let correo = req.body.email;
+        correo = correo.trim();
 
-        const eliminado = await usuarioModel.deleteOne({ email: correo });
-        
-        // console.log('JSON' + usuarios);
-        console.log(`Usuario eliminado`)
-        console.log(correo)
-        res.sendStatus(200)
-        res.send("Eliminaste un usuario canijo")        
+        try {
+            
+                const resultado = await usuarioModel.deleteOne({ email: correo });
+            
+                console.log(`Usuario eliminado`)
+                console.log(correo)
+                 
+            
+              } finally {
+                res.send("Eliminaste un usuario canijo")  
+              }
+          
 }
 
 module.exports = userscontroller;
