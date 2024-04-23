@@ -14,7 +14,9 @@ controller.index = async (req,res) =>{
                
                 const usuarios = await usuarioModel.find();
                 
-                console.log('JSON' + usuarios);
+                if (usuarios != null){
+                        console.log('Usuarios cargados');
+                }
                 console.log('CONNECTION OK with nodemon')
         }catch(err){
                 console.log(err);
