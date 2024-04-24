@@ -7,9 +7,13 @@ const SchemaUsuario = new Schema({
         type : String,
         unique: true,
         required: true},
+    picture:{
+        type : String
+    },
     name: {
         type : String}, 
-    familyname: {type: String}
+    familyname: {
+        type: String}
 },
 {
     versionKey: false,
