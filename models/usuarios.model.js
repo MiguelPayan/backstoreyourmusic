@@ -11,9 +11,11 @@ const SchemaUsuario = new Schema({
         type : String
     },
     name: {
-        type : String}, 
+        type : String
+    }, 
     familyname: {
-        type: String}
+        type: String
+    }
 },
 {
     versionKey: false,
