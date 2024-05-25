@@ -1,0 +1,42 @@
+//- views/profile.pug
+doctype html
+html
+  head
+    title Perfil de Usuario
+    link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+    link(rel="stylesheet" href="/css/styles.css")
+  body
+    .container
+      .row
+        .col-md-4
+          img(src=user.picture alt="Foto de perfil" class="img-fluid rounded-circle")
+        .col-md-8
+          h1 #{user.name}
+          p
+            strong Nombre Artístico: 
+            | #{user.profile ? user.profile.nombreArtistico : 'No disponible'}
+          p
+            strong Email: 
+            | #{user.email}
+          p
+            strong Edad: 
+            | #{user.profile ? user.profile.edad : 'No disponible'}
+          p
+            strong Facebook: 
+            if user.profile && user.profile.facebook
+              a(href=user.profile.facebook target="_blank") #{user.profile.facebook}
+            else
+              | No disponible
+          p
+            strong Spotify: 
+            if user.profile && user.profile.spotify
+              a(href=user.profile.spotify target="_blank") #{user.profile.spotify}
+            else
+              | No disponible
+          p
+            strong YouTube: 
+            if user.profile && user.profile.youtube
+              a(href=user.profile.youtube target="_blank") #{user.profile.youtube}
+            else
+              | No disponible
+

@@ -15,6 +15,13 @@ const SchemaUsuario = new Schema({
     }, 
     familyname: {
         type: String
+    },
+    profile: {
+        nombreArtistico: { type: String },
+        edad: { type: String },
+        facebook: { type: String },
+        spotify: { type: String },
+        youtube: { type: String }
     }
 },
 {
