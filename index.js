@@ -1,5 +1,7 @@
 
 //Rutas
+
+const multer = require ("multer")
 const routes = require ("./routes/index.routes");
 const { index } = require("./controller/index.controller");
 const express = require("express");
@@ -9,6 +11,7 @@ const bodyparser = require('body-parser');
 const cors = require('cors');
 const port = process.env.PORT || 3000;
 
+const upload = multer({dest: 'canciones/'})
 
 app.use(cors());
 
