@@ -29,4 +29,6 @@ async function renombrar(file){
     return newPath;
 }
 
+router.use('/canciones',express.static('./canciones'))
+
 module.exports = router;
