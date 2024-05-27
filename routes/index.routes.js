@@ -6,7 +6,7 @@ const bodyparser = require('body-parser');
 const controller = require ('../controller/index.controller');
 const controllerusers = require ('../controller/usuarios.controller');
 
-const upload = multer({dest: 'canciones/'})
+const upload = multer({dest: './opt/render/project/src/canciones/'})
 
 router.post('/',bodyparser.json(), controller.insertar);
 
