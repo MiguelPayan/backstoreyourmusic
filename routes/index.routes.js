@@ -31,4 +31,13 @@ async function renombrar(file){
 
 router.use('/canciones',express.static('./canciones'))
 
+router.get('/mostrarcanciones', async (req, res) => {
+   await fs.readdir('./canciones', (err, files) => {
+        if (err) {
+            return res.status(500).send('Error al leer el directorio');
+        }
+         console.log(files)
+    });
+});
+
 module.exports = router;
