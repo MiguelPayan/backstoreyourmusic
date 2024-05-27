@@ -22,9 +22,10 @@ router.post('/cancion/single', upload.single('cancion') ,(req,res)=>{
     res.send('Terminadisimo')
 })
 
-function renombrar(file){
-    const newPath = `./canciones/${file.originalname}`;
+async function renombrar(file){
+    const newPath = await `./canciones/${file.originalname}`;
     fs.renameSync(file.path, newPath);
+    await console.log(newPath);
     return newPath;
 }
 
