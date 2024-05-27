@@ -36,7 +36,7 @@ router.get('/mostrarcanciones', async (req, res) => {
         if (err) {
             return res.status(500).send('Error al leer el directorio');
         }
-         console.log(files)
+         res.send(files);
     });
 });
 
