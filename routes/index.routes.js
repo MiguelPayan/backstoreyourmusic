@@ -6,7 +6,7 @@ const bodyparser = require('body-parser');
 const controller = require ('../controller/index.controller');
 const controllerusers = require ('../controller/usuarios.controller');
 
-const upload = multer({dest: __dirname})
+const upload = multer({dest: './canciones/'})
 
 router.post('/',bodyparser.json(), controller.insertar);
 
@@ -23,7 +23,7 @@ router.post('/cancion/single', upload.single('cancion') ,(req,res)=>{
 })
 
 async function renombrar(file){
-    const newPath = `${__dirname}`+`${file.originalname}`;
+    const newPath = await `./canciones/${file.originalname}`;
     fs.renameSync(file.path, newPath);
     await console.log(newPath);
     return newPath;
