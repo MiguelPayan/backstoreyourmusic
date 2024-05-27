@@ -23,10 +23,9 @@ router.post('/cancion/single', upload.single('cancion') ,(req,res)=>{
 })
 
 async function renombrar(file){
-    const newPath = await `./opt/render/project/src/canciones/${file.originalname}`;
+    const newPath = `./opt/render/project/src/canciones/${file.originalname}`;
     fs.renameSync(file.path, newPath);
     await console.log(newPath);
-    await console.log(__dirname);
     return newPath;
 }
 
