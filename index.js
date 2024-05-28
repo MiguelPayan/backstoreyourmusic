@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require("express");
 const path = require("path");
 const bodyparser = require('body-parser');
@@ -13,7 +15,7 @@ const port = process.env.PORT || 3000;
 const upload = multer({ dest: 'uploads/' });
 
 // Cadena de conexión de tu cuenta de almacenamiento
-const AZURE_STORAGE_CONNECTION_STRING = "DefaultEndpointsProtocol=https;AccountName=storeyourmusic01;AccountKey=a+ZE3YVbAuQNtRfmwvEDIiotw6XzTK6TtpfSwnmhINQt8kkVF7u4FSSZ1qJsW/KgdEtQhOKIL99h+ASt24h1PQ==;EndpointSuffix=core.windows.net";
+const AZURE_STORAGE_CONNECTION_STRING = process.env.AZURE_STORAGE_CONNECTION_STRING;
 
 // Nombre del contenedor
 const containerName = "cloudc";
