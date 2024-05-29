@@ -45,12 +45,9 @@ controller.insertar = async (req, res) => {
                 conexion.query(
                         `insert into artistas (nombre, email) values ("${req.body.name}", "${req.body.email}");`,
                          (error, resultados, campos) => {
-                            if (error.errno == 1062) {
+                            if (error) {
                               console.log('Usuario registrado previamente en mysql');
                               return;
-                            }else if (error){
-                                console.error(error)
-                                return;
                             }
                             console.log('Se inserto en mysql');
                           }
