@@ -2,6 +2,8 @@ const controller = {};
 const title = 'INDEX DESDE EL SERVIDOR CON PUG y desde una variable';
 const usuarioModel = require('../models/usuarios.model')
 const connection = require('../db-conection/conection');
+//const connectionsql = require('../db-conection/mysql_conection');
+const conexion = require('../db-conection/mysql_conection');
 //const { post } = require('../routes/index.routes');
 
 
@@ -37,6 +39,24 @@ controller.insertar = async (req, res) => {
                 if(err.code == 11000){
                         console.log('OK, no se ha agregado el correo porque es un corredo ya registrado')
                 }
+        }
+
+        try{
+                conexion.query(
+                        `insert into artistas (nombre, email) values ("${req.body.name}", "${req.body.email}");`,
+                         (error, resultados, campos) => {
+                            if (error.errno == 1062) {
+                              console.log('Usuario registrado previamente en mysql');
+                              return;
+                            }else if (error){
+                                console.error(error)
+                                return;
+                            }
+                            console.log('Se inserto en mysql');
+                          }
+                    );
+        }catch(e){
+                console.error(e);
         }
         
 }
