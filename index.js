@@ -8,6 +8,7 @@ const multer = require("multer");
 const { BlobServiceClient } = require('@azure/storage-blob');
 const fs = require('fs');
 const routes = require("./routes/index.routes");
+const conexion = require('./db-conection/mysql_conection');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -59,6 +60,43 @@ app.post('/upload', upload.single('file'), async (req, res) => {
         console.error(error);
         res.status(500).send('Error al subir el archivo');
     }
+});
+
+app.post('/uploadsql',bodyparser.json(),async (req,res) => {
+    //Conseguir:
+    //Email
+    //Enlace = Titulo
+    //IdArtista
+    const valores = req.body;
+    //Titulo
+    let titulo = valores.titulo;
+    //Email
+    let correo = valores.email;
+    let idArtista;
+    //Enlace = Titulo
+    let enlace = `https://storeyourmusic01.blob.core.windows.net/cloudc/${titulo}`;
+    //idArtista
+    await conexion.query(`select idartistas from artistas where email = "${correo}";`,(error,resultado,a) =>{
+        if(error){
+            console.log(error)
+            return;
+        }
+        idArtista = resultado[0].idartistas;
+        console.log(idArtista);
+        conexion.query(
+            `insert into canciones (titulo, idartista, enlace) values ("${titulo}", ${idArtista}, "${enlace}");`,
+             (error, resultados, campos) => {
+                if (error){
+                    console.error(error)
+                    return;
+                }
+                console.log('Se inserto la cancion en mysql');
+              }
+        );
+    })
+
+    res.send('Si jalowin')
+    //conexion.query()
 });
 
 // Nueva ruta para obtener la lista de canciones
