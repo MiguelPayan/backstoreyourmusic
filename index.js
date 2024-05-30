@@ -116,6 +116,30 @@ app.get('/songs', async (req, res) => {
     }
 });
 
+app.get('/getcanciones', async (req, res) => {
+    conexion.query('SELECT * FROM canciones;',(error,resultados) =>{
+        if(error){
+            console.error(error);
+            return;
+        }
+        res.send(resultados)
+    })
+});
+
+app.post('/visita',bodyparser.json(),async(req,res)=>{
+    let idcancion = await req.body;
+    idcancion = await idcancion.idcancion;
+    console.log(idcancion)
+    conexion.query(`update canciones set visitas = visitas + 1 where idcanciones = ${idcancion};`,(error,resultados) =>{
+        if(error){
+            console.error('Ocurrio un error')
+            console.error(error);
+            return;
+        }
+        res.send("Visita sumada!")
+    })
+})
+
 app.use(routes);
 
 app.use((req, res) => {
