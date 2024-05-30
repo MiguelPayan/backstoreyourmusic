@@ -150,6 +150,43 @@ app.post('/visita',bodyparser.json(),async(req,res)=>{
     })
 })
 
+app.get('/artistastop',async (req,res) => {
+    try{
+        await conexion.query('SELECT idartista, SUM(visitas) AS total_visitas FROM canciones GROUP BY idartista order by total_visitas desc;',(error,resultados) => {
+            let podio = resultados.slice(0,3)
+            top1= podio[0].idartista;
+            top2= podio[1].idartista;
+            top3= podio[2].idartista;
+            try{
+                conexion.query(`select nombre from artistas where artistas.idartistas in (${top1}, ${top2}, ${top3});`,
+                (error,resultados) =>{
+                    res.send(resultados)
+                })
+            }catch(error){
+                console.log('Error al obtener los nombres del podio');
+                console.log(error);
+            }
+        })
+    }catch(error){
+        console.log('Error al obtener a los artistas top');
+        console.log(error);
+    }
+    
+});
+
+app.get('/musicatop',async (req,res) => {
+    try{
+        await conexion.query('select * from canciones order by visitas desc;',(error,resultados) => {
+            let podio = resultados.slice(0,4);
+            res.send(podio);
+        })
+    }catch(error){
+        console.log('Error al obtener a los artistas top');
+        console.log(error);
+    }
+    
+})
+
 app.use(routes);
 
 app.use((req, res) => {
