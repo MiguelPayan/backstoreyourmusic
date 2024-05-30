@@ -11,7 +11,6 @@ const routes = require("./routes/index.routes");
 const conexion = require('./db-conection/mysql_conection');
 const app = express();
 const port = process.env.PORT || 3000;
-
 // Configuración de multer
 const upload = multer({ dest: 'uploads/' });
 
@@ -63,7 +62,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 });
 
 app.post('/uploadsql',bodyparser.json(),async (req,res) => {
-    //Conseguir:
+    //Conseguir lo sig. para subir las canciones:
     //Email
     //Enlace = Titulo
     //IdArtista
@@ -76,24 +75,35 @@ app.post('/uploadsql',bodyparser.json(),async (req,res) => {
     //Enlace = Titulo
     let enlace = `https://storeyourmusic01.blob.core.windows.net/cloudc/${titulo}`;
     //idArtista
-    await conexion.query(`select idartistas from artistas where email = "${correo}";`,(error,resultado,a) =>{
-        if(error){
-            console.log(error)
-            return;
-        }
-        idArtista = resultado[0].idartistas;
-        console.log(idArtista);
-        conexion.query(
-            `insert into canciones (titulo, idartista, enlace) values ("${titulo}", ${idArtista}, "${enlace}");`,
-             (error, resultados, campos) => {
-                if (error){
-                    console.error(error)
-                    return;
-                }
-                console.log('Se inserto la cancion en mysql');
-              }
-        );
-    })
+    try {
+        conexion.query(`select idartistas from artistas where email = "${correo}";`,(error,resultado,a) =>{
+            if(error){
+                console.log('Error en el select idartista')
+                console.log(error)
+                return;
+            }
+            idArtista = resultado[0].idartistas;
+            console.log(idArtista);
+            try {
+                conexion.query(`insert into canciones (titulo, idartista, enlace) values ("${titulo}", ${idArtista}, "${enlace}");`,
+                    (error, resultados, campos) => {
+                    if (error){
+                        console.error(error)
+                        return;
+                    }
+                    console.log('Se inserto la cancion en mysql');
+                    
+                    }
+            );
+            }catch(error){
+                console.log("Error despues de obtener el id");
+                console.error(error)
+            }
+        })
+    }catch(error){
+        console.log('Error al obtener id del artista')
+        console.error(error);
+    }
 
     res.send('Si jalowin')
     //conexion.query()
@@ -152,5 +162,4 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.listen(port, () =>{
     console.log("A la espera de conexiones");
 });
-
 console.log('HOLA MUNDO');
